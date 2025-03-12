@@ -37,7 +37,9 @@ public class ClientUDP {
     
     public void sendReceive() throws IOException{
         try {
-            String message = "CIAOOO";
+            Persona p = new Persona("xxx", "giovanni", "pascoli");
+            String message;
+            message = p.toString();
             DatagramPacket outPacket = new DatagramPacket(message.getBytes(), message.length(), serverAddress, portaServer);
             dSocket.send(outPacket);
             
