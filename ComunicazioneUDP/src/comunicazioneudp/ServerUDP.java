@@ -11,6 +11,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.SocketException;
+import java.util.Date;
 
 /**
  *
@@ -31,7 +32,7 @@ public class ServerUDP {
         }
     }
     
-    public void receive(){
+    public void receiveSend(){
         try{
             byte[] bufferIn = new byte [256]; //creo un array di byte per ricere il messaggio
             
@@ -47,6 +48,16 @@ public class ServerUDP {
             String messageIn = new String(inPacket.getData(), 0, inPacket.getLength()); //Recupera il messaggio in byte e trasformalo in stringa, 0 = dall'inizio
             System.out.println("Client: " + clientAddress + ":" + clientPort + " = " + messageIn);
             
+            //INVIA
+            
+            //Crea dato da inviare
+            Date d = new Date();
+            String messageOut = d.toString();
+            byte[] bufferOut = messageOut.getBytes();
+            
+            DatagramPacket outPacket = new DatagramPacket(bufferOut, bufferOut.length, clientAddress, clientPort);
+            dSocket.send(outPacket);
+            
             
         }catch(BindException e){
             System.err.println("Porta già in uso");
@@ -56,7 +67,7 @@ public class ServerUDP {
             System.err.println("Errore I/O");
         }
     }
-    
+
    
 }
 

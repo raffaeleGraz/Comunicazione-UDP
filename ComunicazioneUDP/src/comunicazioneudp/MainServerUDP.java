@@ -11,7 +11,7 @@ public class MainServerUDP {
 
 public static void main(String[] args) {
         ServerUDP s = new ServerUDP(1026);
-        s.receive();
+        s.receiveSend();
     }
 
 }

@@ -35,11 +35,19 @@ public class ClientUDP {
         }
     }
     
-    public void send() throws IOException{
+    public void sendReceive() throws IOException{
         try {
             String message = "CIAOOO";
             DatagramPacket outPacket = new DatagramPacket(message.getBytes(), message.length(), serverAddress, portaServer);
             dSocket.send(outPacket);
+            
+            //RICEVERE
+            byte[] buffer = new byte[256];
+            DatagramPacket inPacket = new DatagramPacket(buffer, buffer.length);
+            dSocket.receive(inPacket);
+            
+            String response = new String(inPacket.getData(), 0, inPacket.getLength());
+            System.out.println("Il server ha risposto: " + response);
                 
         } catch (UnknownHostException e) {
             System.err.println("Errore DNS!");
