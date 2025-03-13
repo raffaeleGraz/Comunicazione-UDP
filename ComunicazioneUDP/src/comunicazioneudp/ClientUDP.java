@@ -35,7 +35,7 @@ public class ClientUDP {
         }
     }
     
-    public void sendReceive() throws IOException{
+    public void send() throws IOException{
         try {
             Persona p = new Persona("xxx", "giovanni", "pascoli");
             String message;
@@ -59,4 +59,9 @@ public class ClientUDP {
             System.err.println("Errore di I/O!");
         }
     }
+
+    public void receive(){
+
+    }
+
 }
