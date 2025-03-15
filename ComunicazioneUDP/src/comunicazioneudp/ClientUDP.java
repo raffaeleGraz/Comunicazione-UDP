@@ -36,6 +36,12 @@ public class ClientUDP {
     }
     
     public void send() throws IOException{
+        System.out.println("┌───────────────────────┐");
+        System.out.print("│");    System.out.print("\033[92m    Invio messaggio    \033[0m");   System.out.println("│");
+        System.out.println("├───────────────────────┤");
+        System.out.println("│ 1. Messaggio di testo │");
+        System.out.println("└───────────────────────┘\n");
+
         try {
             Persona p = new Persona("xxx", "giovanni", "pascoli");
             String message;
