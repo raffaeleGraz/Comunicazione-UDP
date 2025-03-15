@@ -26,13 +26,13 @@ public class ServerUDP {
         this.porta = porta;
         try {
             dSocket = new DatagramSocket(porta);
-            System.out.println("Il server è in ascolto");
+            System.out.println("\033[92m Il server è in ascolto\033[0m");
         } catch (IOException ex) {
             System.err.println("Errore nell'avvio del server");
         }
     }
     
-    public void receiveSend(){
+    public void receive(){
         try{
             byte[] bufferIn = new byte [256]; //creo un array di byte per ricere il messaggio
             
@@ -46,19 +46,11 @@ public class ServerUDP {
             
             //Stampa payload
             String messageIn = new String(inPacket.getData(), 0, inPacket.getLength()); //Recupera il messaggio in byte e trasformalo in stringa, 0 = dall'inizio
-            System.out.println("Client: " + clientAddress + ":" + clientPort + " = " + messageIn);
-            
+            System.out.println("Client: " + clientAddress + ":" + clientPort + " = \033[93m" + messageIn + "\033[0m");
+
             //INVIA
-            
-            //Crea dato da inviare
-            Date d = new Date();
-            String messageOut = d.toString();
-            byte[] bufferOut = messageOut.getBytes();
-            
-            DatagramPacket outPacket = new DatagramPacket(bufferOut, bufferOut.length, clientAddress, clientPort);
-            dSocket.send(outPacket);
-            
-            
+            send(clientAddress, clientPort);
+
         }catch(BindException e){
             System.err.println("Porta già in uso");
         }catch(SocketException e){
@@ -68,6 +60,16 @@ public class ServerUDP {
         }
     }
 
+    public void send(InetAddress clientAddress, int clientPort ) throws IOException {
+        //Crea dato da inviare
+        Date d = new Date();
+        String messageOut = d.toString();
+        byte[] bufferOut = messageOut.getBytes();
+
+        DatagramPacket outPacket = new DatagramPacket(bufferOut, bufferOut.length, clientAddress, clientPort);
+        dSocket.send(outPacket);
+
+    }
    
 }
 

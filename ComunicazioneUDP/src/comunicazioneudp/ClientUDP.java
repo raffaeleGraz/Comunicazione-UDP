@@ -42,14 +42,6 @@ public class ClientUDP {
             message = p.toString();
             DatagramPacket outPacket = new DatagramPacket(message.getBytes(), message.length(), serverAddress, portaServer);
             dSocket.send(outPacket);
-            
-            //RICEVERE
-            byte[] buffer = new byte[256];
-            DatagramPacket inPacket = new DatagramPacket(buffer, buffer.length);
-            dSocket.receive(inPacket);
-            
-            String response = new String(inPacket.getData(), 0, inPacket.getLength());
-            System.out.println("Il server ha risposto: " + response);
                 
         } catch (UnknownHostException e) {
             System.err.println("Errore DNS!");
@@ -61,7 +53,26 @@ public class ClientUDP {
     }
 
     public void receive(){
+        try {
 
+            byte[] buffer = new byte[256];
+            DatagramPacket inPacket = new DatagramPacket(buffer, buffer.length);
+            dSocket.receive(inPacket);
+
+            String response = new String(inPacket.getData(), 0, inPacket.getLength());
+            System.out.println("Il server ha risposto: \033[92m" + response + "\033[0m");
+
+        } catch (UnknownHostException e) {
+            System.err.println("Errore DNS!");
+        } catch (SocketException e) {
+            System.err.println("Errore nel socket!");
+        } catch (IOException e) {
+            System.err.println("Errore di I/O!");
+        }
+    }
+
+    public void close(){
+        dSocket.close();
     }
 
 }
