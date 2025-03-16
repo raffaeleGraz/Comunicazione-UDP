@@ -10,6 +10,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 /**
  *
@@ -35,20 +36,11 @@ public class ClientUDP {
         }
     }
     
-    public void send() throws IOException{
-        System.out.println("┌───────────────────────┐");
-        System.out.print("│");    System.out.print("\033[92m    Invio messaggio    \033[0m");   System.out.println("│");
-        System.out.println("├───────────────────────┤");
-        System.out.println("│ 1. Messaggio di testo │");
-        System.out.println("└───────────────────────┘\n");
-
+    public void send(String message) throws IOException{
         try {
-            Persona p = new Persona("xxx", "giovanni", "pascoli");
-            String message;
-            message = p.toString();
             DatagramPacket outPacket = new DatagramPacket(message.getBytes(), message.length(), serverAddress, portaServer);
             dSocket.send(outPacket);
-                
+
         } catch (UnknownHostException e) {
             System.err.println("Errore DNS!");
         } catch (SocketException e) {
@@ -74,6 +66,43 @@ public class ClientUDP {
             System.err.println("Errore nel socket!");
         } catch (IOException e) {
             System.err.println("Errore di I/O!");
+        }
+    }
+
+    public void menu() throws IOException {
+        while(true) {
+            Scanner scanner = new Scanner(System.in);
+
+            //MENU
+            System.out.println("┌───────────────────────┐");
+            System.out.print("│");
+            System.out.print("\033[92m    Invio messaggio    \033[0m");
+            System.out.println("│");
+            System.out.println("├───────────────────────┤");
+            System.out.println("│ 1. Messaggio di testo │");
+            System.out.println("│ 0. Termina            │");
+            System.out.println("└───────────────────────┘");
+            System.out.print("Scelta: ");
+            int scelta = scanner.nextInt();
+            scanner.nextLine();  //pulire il buffer
+
+            switch (scelta) {
+                case 0:
+                    dSocket.close();
+                    break;
+                case 1:
+                    System.out.print("Inserisci il messaggio: ");
+                    String message = scanner.nextLine();
+                    send(message);
+                    System.out.println("\033[92mMessaggio inviato\033[0m\n");
+                    break;
+                case 2:
+                    // toString per gli oggetti
+                    break;
+                default:
+                    System.out.println("\033[31mScelta non valida\033[0m");
+                    break;
+            }
         }
     }
 
