@@ -89,7 +89,8 @@ public class ClientUDP {
             switch (scelta) {
                 case 0:
                     dSocket.close();
-                    break;
+                    System.out.println("\033[31mConnessione terminata\033[0m");
+                    return;  // Termina il ciclo e quindi la funzione.
                 case 1:
                     System.out.print("Inserisci il messaggio: ");
                     String message = scanner.nextLine();
