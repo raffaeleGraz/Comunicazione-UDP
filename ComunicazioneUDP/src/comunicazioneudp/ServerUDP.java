@@ -26,9 +26,9 @@ public class ServerUDP {
         this.porta = porta;
         try {
             dSocket = new DatagramSocket(porta);
-            System.out.println("\033[92m Il server è in ascolto\033[0m");
+            System.out.println("\033[92mIl server è in ascolto\033[0m");
         } catch (IOException ex) {
-            System.err.println("Errore nell'avvio del server");
+            System.err.println("\033[31mErrore nell'avvio del server\033[0m");
         }
     }
     
@@ -46,7 +46,7 @@ public class ServerUDP {
             
             //Stampa payload
             String messageIn = new String(inPacket.getData(), 0, inPacket.getLength()); //Recupera il messaggio in byte e trasformalo in stringa, 0 = dall'inizio
-            System.out.println("Client: " + clientAddress + ":" + clientPort + " = \033[93m" + messageIn + "\033[0m");
+            System.out.println("Client: \033[36m" + clientAddress + "\033[0m:\033[35m" + clientPort + "\033[0m = \033[93m" + messageIn + "\033[0m");
 
             //INVIA
             send(clientAddress, clientPort);

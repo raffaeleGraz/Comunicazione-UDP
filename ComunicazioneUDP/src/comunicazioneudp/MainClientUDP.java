@@ -14,6 +14,5 @@ public class MainClientUDP {
     public static void main(String[] args) throws IOException {
        ClientUDP c = new ClientUDP("client1", 1026);
        c.menu();
-       c.receive();
     }
 }

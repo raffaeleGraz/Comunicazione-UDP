@@ -58,7 +58,10 @@ public class ClientUDP {
             dSocket.receive(inPacket);
 
             String response = new String(inPacket.getData(), 0, inPacket.getLength());
-            System.out.println("Il server ha risposto: \033[92m" + response + "\033[0m");
+            System.out.println("\nIl server ha risposto: \033[93m" + response + "\033[0m\n");
+
+            //Richiama il menù
+            menu();
 
         } catch (UnknownHostException e) {
             System.err.println("Errore DNS!");
@@ -95,8 +98,10 @@ public class ClientUDP {
                     System.out.print("Inserisci il messaggio: ");
                     String message = scanner.nextLine();
                     send(message);
-                    System.out.println("\033[92mMessaggio inviato\033[0m\n");
-                    break;
+                    System.out.println("\033[92mMessaggio inviato\033[0m");
+                    //Ricevi la rispsosta
+                    receive();
+                    return;
                 case 2:
                     // toString per gli oggetti
                     break;
@@ -106,9 +111,4 @@ public class ClientUDP {
             }
         }
     }
-
-    public void close(){
-        dSocket.close();
-    }
-
 }
